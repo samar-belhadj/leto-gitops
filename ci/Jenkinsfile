@@ -1,0 +1,138 @@
+image_name = 'leto-latest'
+image_full_name = "${dtr_url}/${dtr_organization}/${image_name}"
+
+podTemplate(
+  inheritFrom: 'jenkins-agent',
+  containers: [
+    containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+  ]
+){
+  node(POD_LABEL) {
+    
+    stage('Checkout leto project') {
+      withCredentials([usernamePassword(credentialsId: 'byo-wiki-github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-core.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/jenkinator-plugin.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
+        // checkout([$class: 'GitSCM', branches: [[name: "${GITHUBATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[credentialsId: 'byo-wiki-github', url: 'https://sgithub.fr.world.socgen/dds-itf-acid/githubator-plugin.git']]])
+      }
+    }
+    stage('Checkout cicd folder') {
+      dir('leto-gitops'){
+        checkout scm
+      }
+    }
+    stage('Get Image Tag') {
+      dir('leto-modelizer'){
+        packageJSON = readJSON file: 'package.json'
+        version = packageJSON.version
+        image_tag = "${env.BUILD_ID}-${version}"
+      }
+    }
+    stage('Prepare Plugins') {
+      dir('leto-modelizer') {
+        sh """
+        rm -rf package-lock.json
+        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
+        sed -i 's,leto-modelizer-plugin-cli#.*",leto-modelizer-plugin-cli#${CLI_VERSION}",g' package.json
+        """
+      }
+      dir('leto-modelizer-plugin-core') {
+        sh """
+        rm -rf package-lock.json demo/package-lock.json
+        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        """
+      }
+      dir('jenkinator-plugin') {
+        sh """
+        rm -rf package-lock.json
+        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
+        """
+      }
+      dir('terrator-plugin') {
+        sh """
+        rm -rf package-lock.json
+        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
+        """
+      }
+      dir('kubernator-plugin') {
+        sh """
+        rm -rf package-lock.json
+        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
+        """
+      }
+      // dir('githubator-plugin') {
+      //   sh """
+      //   rm -rf package-lock.json
+      //   sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+      //   sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
+      //   """
+      // }
+    }
+    stage('Build / Tests') {
+      container('node-container') {
+        withCredentials([usernamePassword(credentialsId: 'byo-wiki-github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          dir('leto-modelizer') {
+            sh """
+            npm install npm@latest -g
+            npm install
+            npm install --save ../jenkinator-plugin
+            npm install --save ../terrator-plugin
+            npm install --save ../kubernator-plugin
+            # npm install --save ../githubator-plugin
+            echo -en '{ "plugins": ["jenkinator-plugin", "terrator-plugin", "kubernator-plugin"] }' > plugin.config.json
+            npm run plugin:init
+            export CORS_ISOMORPHIC_BASE_URL='/cors-proxy'
+            export MODELS_DEFAULT_FOLDER='acid'
+            export TEMPLATE_LIBRARY_BASE_URL='https://sgithub.fr.world.socgen/raw/dds-itf-acid/leto-modelizer-templates-library/main'
+            npm run build
+            """
+          }
+          dir('leto-modelizer-plugin-core') {
+            sh """
+            npm install
+            npm run build
+            (cd demo && npm install && npx vue-cli-service build)
+            sed -i 's,/js,./js,g' demo/dist/index.html # make paths relative to work in subfolder
+            mv demo/dist ../leto-modelizer/dist/spa/demo
+            """
+          }
+        }
+      }
+    }
+    
+    
+    stage('Build Docker Image'){
+      container('docker-container') {
+        withEnv(["DOCKER_HOST=tcp://kube9-dev.fr.world.socgen:443", "DOCKER_TLS_VERIFY=1"]){
+          withCredentials([[$class: 'DockerServerCredentialsBinding', credentialsId: "kube9-dev-acid-test", variable: 'DOCKER_CERT_PATH']]){
+            dir('leto-modelizer') {
+              sh """
+              docker build -t ${image_full_name}:${image_tag} -f ../leto-gitops/acid/latest/Docker/Dockerfile .
+              """
+            }
+          }
+        }
+      }
+    }
+    stage('Push Docker Image'){
+      container('docker-container') {
+        withEnv(["DOCKER_HOST=tcp://kube9-dev.fr.world.socgen:443", "DOCKER_TLS_VERIFY=1"]){
+          withCredentials([[$class: 'DockerServerCredentialsBinding', credentialsId: "kube9-dev-acid-test", variable: 'DOCKER_CERT_PATH']]){
+            sh """
+            docker push ${image_full_name}:${image_tag}
+            """
+          }
+        }
+      }
+    }
+   
+  }
+}
