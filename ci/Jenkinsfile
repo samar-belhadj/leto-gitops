@@ -86,9 +86,6 @@ podTemplate(
             # npm install --save ../githubator-plugin
             echo -en '{ "plugins": ["jenkinator-plugin", "terrator-plugin", "kubernator-plugin"] }' > plugin.config.json
             npm run plugin:init
-            export CORS_ISOMORPHIC_BASE_URL='/cors-proxy'
-            export MODELS_DEFAULT_FOLDER='acid'
-            export TEMPLATE_LIBRARY_BASE_URL='https://sgithub.fr.world.socgen/raw/dds-itf-acid/leto-modelizer-templates-library/main'
             npm run build
             """
           }
