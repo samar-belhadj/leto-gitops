@@ -36,8 +36,8 @@ podTemplate(
         sh """
         rm -rf package-lock.json
         sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
-        //sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
-        //sed -i 's,leto-modelizer-plugin-cli#.*",leto-modelizer-plugin-cli",g' package.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
+        sed -i 's,leto-modelizer-plugin-cli#.*",leto-modelizer-plugin-cli",g' package.json
         """
       }
       dir('leto-modelizer-plugin-core') {
