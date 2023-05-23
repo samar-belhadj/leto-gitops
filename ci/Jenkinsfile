@@ -73,9 +73,12 @@ podTemplate(
       //   """
       // }
     }
+
+    //withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+
     stage('Build / Tests') {
       container('node-container') {
-        withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        
           dir('leto-modelizer') {
             sh """
             npm install npm@latest -g
@@ -99,7 +102,7 @@ podTemplate(
             mv demo/dist ../leto-modelizer/dist/spa/demo
             """
           }
-        }
+        
       }
     }
     
