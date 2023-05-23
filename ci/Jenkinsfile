@@ -8,7 +8,7 @@ podTemplate(
   node(POD_LABEL) {
     
     stage('Checkout leto project') {
-      withCredentials([usernamePassword(credentialsId: 'github')]) {
+      withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-core.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/jenkinator-plugin.git']]])
