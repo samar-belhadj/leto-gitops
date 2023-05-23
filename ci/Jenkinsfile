@@ -1,6 +1,3 @@
-image_name = 'leto-latest'
-image_full_name = "${dtr_url}/${dtr_organization}/${image_name}"
-
 podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
