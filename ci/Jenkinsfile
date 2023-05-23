@@ -75,7 +75,7 @@ podTemplate(
     }
     stage('Build / Tests') {
       container('node-container') {
-        withCredentials([usernamePassword(credentialsId: 'byo-wiki-github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
           dir('leto-modelizer') {
             sh """
             npm install npm@latest -g
