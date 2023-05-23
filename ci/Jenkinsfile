@@ -83,7 +83,7 @@ podTemplate(
         
           dir('leto-modelizer') {
             sh """
-            node --v
+            node -v
             npm install npm@latest -g
             npm install  
             cat package.json
