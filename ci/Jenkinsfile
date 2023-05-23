@@ -79,6 +79,7 @@ podTemplate(
           dir('leto-modelizer') {
             sh """
             npm install npm@latest -g
+            cat package.json
             npm install
             npm install --save ../jenkinator-plugin
             npm install --save ../terrator-plugin
