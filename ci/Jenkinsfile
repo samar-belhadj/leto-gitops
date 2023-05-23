@@ -85,6 +85,7 @@ podTemplate(
             sh """
             npm install npm@latest -g
             npm cache clean --force
+            npm install -g npm 
             cat package.json
             npm install
             npm install --save ../jenkinator-plugin
