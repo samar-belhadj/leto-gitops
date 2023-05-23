@@ -84,6 +84,7 @@ podTemplate(
           dir('leto-modelizer') {
             sh """
             npm install npm@latest -g
+            npm cache clean --force
             cat package.json
             npm install
             npm install --save ../jenkinator-plugin
