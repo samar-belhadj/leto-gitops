@@ -36,7 +36,7 @@ podTemplate(
       dir('leto-modelizer') {
         sh """
         rm -rf package-lock.json
-        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
         sed -i 's,leto-modelizer-plugin-cli#.*",leto-modelizer-plugin-cli#${CLI_VERSION}",g' package.json
         """
@@ -44,27 +44,27 @@ podTemplate(
       dir('leto-modelizer-plugin-core') {
         sh """
         rm -rf package-lock.json demo/package-lock.json
-        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         """
       }
       dir('jenkinator-plugin') {
         sh """
         rm -rf package-lock.json
-        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
         """
       }
       dir('terrator-plugin') {
         sh """
         rm -rf package-lock.json
-        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
         """
       }
       dir('kubernator-plugin') {
         sh """
         rm -rf package-lock.json
-        sed -i 's,github:ditrit/,git+https://sgithub.fr.world.socgen/dds-itf-acid/,g' package.json
+        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
         """
       }
