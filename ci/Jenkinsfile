@@ -1,7 +1,7 @@
 podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
-    containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+   // containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
   ]
 ){
