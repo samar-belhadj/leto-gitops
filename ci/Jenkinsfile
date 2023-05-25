@@ -14,7 +14,7 @@ podTemplate(
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-cli.git']]])
         
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/jenkinator-plugin.git']]])
-        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
+        //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
         // checkout([$class: 'GitSCM', branches: [[name: "${GITHUBATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[credentialsId: 'byo-wiki-github', url: 'https://sgithub.fr.world.socgen/dds-itf-acid/githubator-plugin.git']]])
       
@@ -31,16 +31,11 @@ podTemplate(
         
           dir('leto-modelizer') {
             sh """
+            pm install -g npm@8.19.3
             node -v
             npm -v
             cat package.json
             npm install
-            # npm install --save ../jenkinator-plugin
-            # npm install --save ../terrator-plugin
-            # npm install --save ../kubernator-plugin
-            # npm install --save ../githubator-plugin
-            #echo -en '{ "plugins": ["jenkinator-plugin", "terrator-plugin", "kubernator-plugin"] }' > plugin.config.json
-            #npm run plugin:init
             npm run build
             """
           }
