@@ -1,4 +1,7 @@
-podTemplate(
+image_full_name = 'Leto'
+
+
+PodTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
    // containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
@@ -22,13 +25,13 @@ podTemplate(
         checkout scm
       }
     }
-    /*stage('Get Image Tag') {
+    stage('Get Image Tag') {
       dir('leto-modelizer'){
         packageJSON = readJSON file: 'package.json'
         version = packageJSON.version
         image_tag = "${env.BUILD_ID}-${version}"
       }
-    }*/
+    }
     stage('Prepare Plugins') {
       dir('leto-modelizer') {
         sh """
@@ -91,8 +94,23 @@ podTemplate(
         
       }
     }
-    
-    
+
+    stage('Build / Push Docker Image'){
+      container('docker-container') {
+       
+          withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKERH_CONFIG')]){
+            dir('leto-modelizer') {
+              sh """
+              docker build -t samarbelhadj/${image_full_name}:${image_tag} -f ../leto-gitops/docker/Dockerfile .
+              mkdir /usr/docker_config && cp "$DOCKERH_CONFIG" /usr/docker_config/
+              docker --config /usr/docker_config/ push  samarbelhadj/${image_full_name}:${image_tag}
+              """
+            }
+          }
+        
+      }
+    }
+
     
    
   }
