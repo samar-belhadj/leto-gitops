@@ -1,4 +1,4 @@
-image_full_name = 'Leto'
+image_full_name = 'leto'
 image_tag = '1.0.0'
 
 
@@ -89,11 +89,11 @@ podTemplate(
     stage('Build / Push Docker Image'){
       container('docker-container') {
        
-          withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKERH_CONFIG')]){
+          withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
             dir('leto-modelizer') {
               sh """
               docker build -t samarbelhadj/${image_full_name}:${image_tag} -f ../leto-gitops/docker/Dockerfile .
-              mkdir /usr/docker_config && cp "$DOCKERH_CONFIG" /usr/docker_config/
+              mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
               docker --config /usr/docker_config/ push  samarbelhadj/${image_full_name}:${image_tag}
               """
             }
