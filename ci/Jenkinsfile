@@ -1,4 +1,5 @@
 image_full_name = 'Leto'
+image_tag = '1.0.0'
 
 
 podTemplate(
@@ -23,13 +24,14 @@ podTemplate(
         checkout scm
       }
     }
-    stage('Get Image Tag') {
+   /* stage('Get Image Tag') {
       dir('leto-modelizer'){
+        
         packageJSON = readJSON file: 'package.json'
         version = packageJSON.version
         image_tag = "${env.BUILD_ID}-${version}"
       }
-    }
+    }*/
     stage('Prepare Plugins') {
       dir('leto-modelizer') {
         sh """
