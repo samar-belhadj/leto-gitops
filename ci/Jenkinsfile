@@ -5,8 +5,7 @@ podTemplate(
     containerTemplate(name: 'node-container', image: 'bitnami/node:18.4.0', alwaysPullImage: false, ttyEnabled: true, command: 'cat')
   
 ]
-
-){
+)
   node(POD_LABEL) {
     
     stage('Checkout leto project') {
