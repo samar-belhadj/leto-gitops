@@ -9,8 +9,7 @@ podTemplate(
   node(POD_LABEL) {
     
     stage('Checkout leto project') {
-      withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-       checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-core.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-cli.git']]])
         
@@ -18,7 +17,7 @@ podTemplate(
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
         // checkout([$class: 'GitSCM', branches: [[name: "${GITHUBATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[credentialsId: 'byo-wiki-github', url: 'https://sgithub.fr.world.socgen/dds-itf-acid/githubator-plugin.git']]])
-      }
+      
     }
     stage('Checkout cicd folder') {
       dir('leto-gitops'){
