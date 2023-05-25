@@ -10,7 +10,7 @@ podTemplate(
     
     stage('Checkout leto project') {
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer.git']]])
-        //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-core.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer-plugin-core.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer-plugin-cli.git']]])
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/jenkinator-plugin.git']]])
         //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
@@ -23,14 +23,28 @@ podTemplate(
         checkout scm
       }
     }
-   
     
+   
+    stage('Prepare Plugins') {
+      dir('leto-modelizer') {
+        sh """
+        rm -rf package-lock.json
+        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
+        sed -i 's,leto-modelizer-plugin-cli#.*",leto-modelizer-plugin-cli",g' package.json
+        """
+      }
+
+      dir('leto-modelizer-plugin-core') {
+        sh """
+        rm -rf package-lock.json demo/package-lock.json
+        """
+      }
+
     stage('Build / Tests') {
       container('node-container') {
         
           dir('leto-modelizer') {
             sh """
-            rm package-lock.json
             npm install -g npm@8.19.3
             node -v
             npm -v
