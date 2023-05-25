@@ -73,15 +73,7 @@ podTemplate(
             npm run build
             """
           }
-          dir('leto-modelizer-plugin-core') {
-            sh """
-            npm install
-            npm run build
-            (cd demo && npm install && npx vue-cli-service build)
-            sed -i 's,/js,./js,g' demo/dist/index.html # make paths relative to work in subfolder
-            mv demo/dist ../leto-modelizer/dist/spa/demo
-            """
-          }
+          
         
       }
     }
