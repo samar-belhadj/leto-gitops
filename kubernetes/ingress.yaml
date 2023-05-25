@@ -7,7 +7,7 @@ spec:
     - host: samar.flask-app.ht.nearteam.fr
       http:
         paths:
-          - path: 
+          - path: /
             pathType: Exact
             backend:
               service:
