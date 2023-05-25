@@ -39,7 +39,7 @@ podTemplate(
         rm -rf package-lock.json demo/package-lock.json
         """
       }
-
+    }
     stage('Build / Tests') {
       container('node-container') {
         
