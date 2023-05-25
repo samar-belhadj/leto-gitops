@@ -26,20 +26,6 @@ spec:
         - image: samarbelhadj/leto:1.0.0
           imagePullPolicy: Always
           name: leto-latest-cn
-          envFrom:
-          - configMapRef:
-              name: leto-latest-cm-env
           ports:
-            - containerPort: 8443
-              protocol: TCP
             - containerPort: 8080
-              protocol: TCP
           
-          resources:
-            limits:
-              cpu: 400m
-              memory: 500Mi
-            requests:
-              cpu: 400m
-              memory: 500Mi
-   
