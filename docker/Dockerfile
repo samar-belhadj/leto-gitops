@@ -14,6 +14,5 @@ COPY ./dist /usr/app/src
 ##########################################################
 WORKDIR /usr/app/src
 
-EXPOSE 80
+EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
