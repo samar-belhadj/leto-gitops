@@ -1,7 +1,7 @@
 image_full_name = 'Leto'
 
 
-PodTemplate(
+podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
     containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
