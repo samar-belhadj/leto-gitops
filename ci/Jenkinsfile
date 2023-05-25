@@ -74,7 +74,7 @@ podTemplate(
       //   sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core#${CORE_VERSION}",g' package.json
       //   """
       // }
-    }
+    //}
 
     //withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 
