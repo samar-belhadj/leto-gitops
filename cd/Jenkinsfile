@@ -11,21 +11,9 @@ podTemplate(
       checkout scm
     }
 
-stage('Deploy to aks') {
-            container('kubectl'){
-                withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
-                    sh 'kubectl apply -f k8s/deployment.yaml,k8s/service.yaml,k8s/Ingress.yaml,k8s/configmap.yaml,k8s/db-secret.yaml,k8s/hpa.yaml '
-
-                }
-
-            }
-
-        }
 
 
-
-
-    stage('Deploy on kaks'){
+    stage('Deploy on aks'){
       container('kubectl') {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]){
           echo 'Applying K8s manifests...'
