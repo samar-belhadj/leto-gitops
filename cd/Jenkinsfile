@@ -1,0 +1,40 @@
+workspace = 'byo-ad016-dev-acid'
+
+podTemplate(
+  inheritFrom: 'jenkins-agent',
+  containers: [
+    containerTemplate(name: 'kubectl', image: 'alpine/k8s:1.24.13', alwaysPullImage: false, ttyEnabled: true, command: 'cat')
+  ]
+) {
+  node(POD_LABEL) {
+    stage('checkout scm') {
+      checkout scm
+    }
+
+stage('Deploy to aks') {
+            container('kubectl'){
+                withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f k8s/deployment.yaml,k8s/service.yaml,k8s/Ingress.yaml,k8s/configmap.yaml,k8s/db-secret.yaml,k8s/hpa.yaml '
+
+                }
+
+            }
+
+        }
+
+
+
+
+    stage('Deploy on kaks'){
+      container('kubectl') {
+        withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]){
+          echo 'Applying K8s manifests...'
+          sh "kubectl apply -f kubernetes/deployment.yaml "
+          sh "kubectl apply -f kubernetes/svc.yaml "
+          sh "kubectl apply -f kubernetes/ingress.yaml"
+          sh "kubectl apply -f kubernetes/cm-env.yaml"
+        }
+      }
+    }
+  }
+}

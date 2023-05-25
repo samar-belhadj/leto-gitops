@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: leto-latest
+    app.kubernetes.io/component: leto-latest
+  name: leto-latest-deployment
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: leto-latest
+      app.kubernetes.io/component: leto-latest
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: leto-latest
+        app.kubernetes.io/component: leto-latest
+    spec:
+      containers:
+        - image: samarbelhadj/leto:1.0.0
+          imagePullPolicy: Always
+          name: leto-latest-cn
+          envFrom:
+          - configMapRef:
+              name: leto-latest-cm-env
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          
+          resources:
+            limits:
+              cpu: 400m
+              memory: 500Mi
+            requests:
+              cpu: 400m
+              memory: 500Mi
+   

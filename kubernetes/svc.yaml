@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leto-latest-svc
+  labels:
+    app.kubernetes.io/name: leto-latest
+    app.kubernetes.io/component: leto-latest
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: leto-latest
+    app.kubernetes.io/component: leto-latest
+  type: ClusterIP
