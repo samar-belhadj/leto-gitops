@@ -5,7 +5,7 @@ image_tag = '1.0.0'
 podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
-    containerTemplate(name: 'node-container', image: 'node:current-alpine3.17', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
   ]
 ){
   node(POD_LABEL) {
@@ -74,7 +74,7 @@ podTemplate(
       }
     
     }
-    stage('Build / Tests') {
+    stage('Build ') {
       container('node-container') {
         
           dir('leto-modelizer') {
