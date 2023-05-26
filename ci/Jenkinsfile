@@ -80,7 +80,7 @@ podTemplate(
           dir('leto-modelizer') {
             sh """
             node -v
-            #npm install npm@latest -g
+            npm install npm@latest -g
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
