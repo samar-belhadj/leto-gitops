@@ -81,6 +81,7 @@ podTemplate(
             sh """
             node -v
             npm install npm@latest -g
+            npm -v
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
