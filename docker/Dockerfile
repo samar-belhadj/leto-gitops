@@ -7,12 +7,21 @@ FROM nginx:1.18.0-alpine
 ## COPY APP FROM BUILD STAGE
 ##########################################################
 
-COPY ./dist /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./dist /usr/app/src
+
+##########################################################
+## Update workdir path
+##########################################################
+WORKDIR /usr/app/src
 
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
+
+
+
+
 
 
 
