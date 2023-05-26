@@ -5,7 +5,7 @@ image_tag = '1.0.0'
 podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
-    containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'node-container', image: 'node:current-alpine3.17', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
   ]
 ){
   node(POD_LABEL) {
@@ -80,7 +80,7 @@ podTemplate(
           dir('leto-modelizer') {
             sh """
             node -v
-            npm install npm@latest -g
+            #npm install npm@latest -g
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
