@@ -13,4 +13,4 @@ spec:
   selector:
     app.kubernetes.io/name: leto-latest
     app.kubernetes.io/component: leto-latest
-  type: ClusterIP
+  type: NodePort
