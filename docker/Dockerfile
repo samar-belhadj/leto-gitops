@@ -1,14 +1,19 @@
-
+#####################################
+## Set NGINX image as base image
+#####################################
 FROM nginx:1.18.0-alpine
 
-WORKDIR /app
+##########################################################
+## COPY APP FROM BUILD STAGE
+##########################################################
 
-COPY /app/dist/spa /usr/share/nginx/html
-
-COPY /app/nginx.conf /etc/nginx/nginx.conf
+COPY ./dist /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
+
 
 
