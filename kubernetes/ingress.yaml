@@ -2,18 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: leto-latest-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: samar.flask-app.ht.nearteam.fr
-      http:
-        paths:
-          - path: /
-            pathType: Exact
-            backend:
-              service:
-                name: leto-latest-svc
-                port:
-                  number: 8081
-
-          
-              
+  - host: samar.flask-app.ht.nearteam.fr
+    http:
+      paths:
+      - path: /leto-latest
+        pathType: Prefix
+        backend:
+          service:
+            name: leto-latest-svc
+            port:
+              number: 8081
