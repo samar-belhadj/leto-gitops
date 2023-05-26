@@ -13,7 +13,7 @@ spec:
               service:
                 name: leto-latest-svc
                 port:
-                  number: 8080
+                  number: 8081
 
           
               

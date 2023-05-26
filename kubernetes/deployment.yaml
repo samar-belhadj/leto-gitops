@@ -3,29 +3,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: leto-latest
-    app.kubernetes.io/component: leto-latest
+    app: leto-latest
   name: leto-latest-deployment
 spec:
   replicas: 1
-  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: leto-latest
-      app.kubernetes.io/component: leto-latest
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
+      app: leto-latest
+  
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: leto-latest
-        app.kubernetes.io/component: leto-latest
+        appt: leto-latest
     spec:
       containers:
-        - image: samarbelhadj/leto:1.0.0
-          imagePullPolicy: Always
+        - image: samarbelhadj/leto-modelizer-local
           name: leto-latest-cn
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           

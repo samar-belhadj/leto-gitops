@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: leto-latest-cm-env
-data:
-  NODE_ENV: 'dev'

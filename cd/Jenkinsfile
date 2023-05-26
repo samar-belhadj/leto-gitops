@@ -20,7 +20,6 @@ podTemplate(
           sh "kubectl apply -f kubernetes/deployment.yaml "
           sh "kubectl apply -f kubernetes/svc.yaml "
           sh "kubectl apply -f kubernetes/ingress.yaml"
-          sh "kubectl apply -f kubernetes/cm-env.yaml"
         }
       }
     }
