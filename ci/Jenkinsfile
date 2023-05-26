@@ -76,9 +76,8 @@ podTemplate(
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
-            npm install --save ../kubernator-plugin
 
-            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" ,  "kubernator-plugin"] }'>plugin.config.json
+            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" ] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
             npm run build
