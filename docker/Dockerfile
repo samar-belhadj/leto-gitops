@@ -4,7 +4,7 @@ FROM nginx:1.18.0-alpine
 
 COPY ./dist/spa  /usr/share/nginx/html
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /usr/local/nginx/conf/nginx.conf
 
 EXPOSE 80
 

@@ -9,7 +9,8 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 8081
+    port: 80
+    targetPort: 80
   selector:
     app.kubernetes.io/name: leto-latest
     app.kubernetes.io/component: leto-latest

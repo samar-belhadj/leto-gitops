@@ -23,5 +23,5 @@ spec:
         - image: samarbelhadj/leto:1.0.0
           name: leto-latest-cn
           ports:
-            - containerPort: 8081
+            - containerPort: 80
           
