@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/component: leto-latest
     spec:
       containers:
-        - image: samarbelhadj/leto-modelizer-local:latest
+        - image: samarbelhadj/leto:1.0.0
           name: leto-latest-cn
           ports:
             - containerPort: 8081

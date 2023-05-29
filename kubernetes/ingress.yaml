@@ -9,10 +9,10 @@ spec:
   - host: samar.flask-app.ht.nearteam.fr
     http:
       paths:
-      - path: /leto-latest
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: leto-latest-svc
             port:
-              number: 8081
+              number: 5000
