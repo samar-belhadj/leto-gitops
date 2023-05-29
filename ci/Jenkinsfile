@@ -17,7 +17,7 @@ podTemplate(
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-cli.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/githubator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
-        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
+        //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
 
 
       }
@@ -67,13 +67,13 @@ podTemplate(
         """
       }
       
-      dir('kubernator-plugin') {
+     /* dir('kubernator-plugin') {
         sh """
         rm -rf package-lock.json
         sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
         """
-      }
+      }*/
     
     }
     stage('Build ') {
@@ -85,10 +85,10 @@ podTemplate(
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
-            npm install --save ../kubernator-plugin
+           # npm install --save ../kubernator-plugin
             
 
-            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" ] }'>plugin.config.json
+            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" ] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
             npm run build
