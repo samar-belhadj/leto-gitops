@@ -2,6 +2,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
   labels:
     app.kubernetes.io/name: leto-latest
     app.kubernetes.io/component: leto-latest
@@ -21,6 +23,7 @@ spec:
     spec:
       containers:
         - image: samarbelhadj/letowithtwo:1.0.0
+          imagePullPolicy: Always
           name: leto-latest-cn
           ports:
             - containerPort: 80

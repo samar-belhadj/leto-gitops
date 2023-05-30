@@ -6,6 +6,8 @@ podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
     containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+
   ]
 ){
   node(POD_LABEL) {
@@ -101,7 +103,7 @@ podTemplate(
     }
 
     stage('Build / Push Docker Image'){
-      container('docker-daemon') {
+      container('docker-container') {
        
           withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
             dir('leto-modelizer') {
