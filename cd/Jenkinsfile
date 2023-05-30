@@ -1,4 +1,3 @@
-workspace = 'byo-ad016-dev-acid'
 
 podTemplate(
   inheritFrom: 'jenkins-agent',
