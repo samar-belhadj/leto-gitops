@@ -1,4 +1,4 @@
-image_full_name = 'letowithjk'
+image_full_name = 'letowithdocker'
 image_tag = '1.0.0'
 
 
@@ -20,9 +20,10 @@ podTemplate(
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/jenkinator-plugin.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'docker-composator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/docker-composator-plugin.git']]])
 
 
-      }
+      }  
     }
     stage('Checkout cicd folder') {
       dir('leto-gitops'){
@@ -77,9 +78,11 @@ podTemplate(
             npm install --save ../githubator-plugin
             npm install --save ../kubernator-plugin
             npm install --save ../jenkinator-plugin
+            npm install --save ../docker-composator-plugin
+            
             
 
-            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" , "jenkinator-plugin"] }'>plugin.config.json
+            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" , "docker-composator-plugin" , "jenkinator-plugin"] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
             npm run build
