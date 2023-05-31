@@ -9,13 +9,7 @@ metadata:
   creationTimestamp: null
   generation: 1
   name: leto-latest-ingress
-
-  
 spec:
-  tls:
-    - hosts:
-      - leto-modelizer.ht.nearteam.fr
-      secretName: leto-cert
   rules:
   - host: leto-modelizer.ht.nearteam.fr
     http:
