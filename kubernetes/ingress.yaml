@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -5,19 +6,23 @@ metadata:
     kubernetes.io/ingress.allow-http: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "false"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    cert-manager.io/issuer: acme-lets-encrypt
+    cert-manager.io/issuer: letsencrypt-leto
   creationTimestamp: null
   generation: 1
   name: leto-latest-ingress
 spec:
+  tls:
+    - hosts:
+        - leto-modelizer.ht.nearteam.fr
+      secretName: leto-cert
   rules:
-  - host: leto-modelizer.ht.nearteam.fr
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: leto-latest-svc
-            port:
-              number: 80
+    - host: leto-modelizer.ht.nearteam.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: leto-latest-svc
+                port:
+                  number: 80

@@ -19,6 +19,7 @@ podTemplate(
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/githubator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jenkinator-plugin']], userRemoteConfigs: [[url: 'https://github.com/emna98/jenkinator-plugin.git']]])
 
 
       }
@@ -28,14 +29,7 @@ podTemplate(
         checkout scm
       }
     }
-   /* stage('Get Image Tag') {
-      dir('leto-modelizer'){
-        
-        packageJSON = readJSON file: 'package.json'
-        version = packageJSON.version
-        image_tag = "${env.BUILD_ID}-${version}"
-      }
-    }*/
+ 
     stage('Prepare Plugins') {
       dir('leto-modelizer') {
         sh """
