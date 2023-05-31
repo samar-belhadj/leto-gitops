@@ -102,21 +102,34 @@ podTemplate(
       }
     }
 
-    stage('Build / Push Docker Image'){
+    stage('Build Docker Image'){
       container('docker-daemon') {
        
-          withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
             dir('leto-modelizer') {
               sh """
               docker build -t samarbelhadj/${image_full_name}:${image_tag} -f ../leto-gitops/docker/Dockerfile .
-              mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
-              docker --config /usr/docker_config/ push  samarbelhadj/${image_full_name}:${image_tag}
+              
               """
             }
           }
-        
-      }
+      
+      
     }
+
+    stage('Push Docker Image'){
+          container('docker-daemon') {
+          
+              withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
+                dir('leto-modelizer') {
+                  sh """
+                  mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
+                  docker --config /usr/docker_config/ push  samarbelhadj/${image_full_name}:${image_tag}
+                  """
+                }
+              }
+            
+          }
+        }
 
     
    

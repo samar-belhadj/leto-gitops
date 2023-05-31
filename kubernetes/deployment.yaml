@@ -22,8 +22,16 @@ spec:
         app.kubernetes.io/component: leto-latest
     spec:
       containers:
-        - image: samarbelhadj/letowithtwo:1.0.0
+        - image: samarbelhadj/latestleto:2.0.0
           imagePullPolicy: Always
           name: leto-latest-cn
           ports:
             - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/
+              name: leto-latest-cm-nginx
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: leto-latest-cm-nginx
+          name: leto-latest-cm-nginx
