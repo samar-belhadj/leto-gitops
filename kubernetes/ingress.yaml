@@ -5,10 +5,18 @@ metadata:
     kubernetes.io/ingress.allow-http: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "false"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/issuer: acme-lets-encrypt
   creationTimestamp: null
   generation: 1
   name: leto-latest-ingress
+
+  
 spec:
+  
+  tls:
+    - hosts:
+      - leto-modelizer.ht.nearteam.fr
+      secretName: leto-cert
   rules:
   - host: leto-modelizer.ht.nearteam.fr
     http:
