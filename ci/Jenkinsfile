@@ -3,10 +3,10 @@ image_tag = '1.0.0'
 
 
 podTemplate(
-  inheritFrom: 'kube-agent',
+  inheritFrom: 'jenkins-agent',
   containers: [
     containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
-    containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
+    //containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
 
   ]
 ){
