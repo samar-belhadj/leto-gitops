@@ -1,12 +1,11 @@
-image_full_name = 'latestleto'
-image_tag = '2.0.0'
+image_full_name = 'letowithkub'
+image_tag = '1.0.0'
 
 
 podTemplate(
   inheritFrom: 'jenkins-agent',
   containers: [
     containerTemplate(name: 'node-container', image: 'node:latest', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
-    //containerTemplate(name: 'docker-container', image: 'docker:19.03.1-dind', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
 
   ]
 ){
@@ -19,7 +18,7 @@ podTemplate(
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-cli.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/githubator-plugin.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/terrator-plugin.git']]])
-        //checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/kubernator-plugin.git']]])
 
 
       }
@@ -69,13 +68,6 @@ podTemplate(
         """
       }
       
-     /* dir('kubernator-plugin') {
-        sh """
-        rm -rf package-lock.json
-        sed -i 's,github:ditrit/,git+https://github.com/samar-belhadj/,g' package.json
-        sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
-        """
-      }*/
     
     }
     stage('Build ') {
@@ -87,10 +79,10 @@ podTemplate(
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
-           # npm install --save ../kubernator-plugin
+            npm install --save ../kubernator-plugin
             
 
-            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" ] }'>plugin.config.json
+            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" ] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
             npm run build

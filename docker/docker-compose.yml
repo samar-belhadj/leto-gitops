@@ -1,7 +1,5 @@
 version: '3'
-
 services:
-  
   front:
     image: samarbelhadj/latestleto:2.0.0
     ports:
