@@ -16,10 +16,7 @@ podTemplate(
       container('kubectl') {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]){
           echo 'Applying K8s manifests...'
-          sh "kubectl apply -f kubernetes/deployment.yaml "
-          sh "kubectl apply -f kubernetes/svc.yaml "
-          sh "kubectl apply -f kubernetes/ingress.yaml"
-          sh "kubectl apply -f kubernetes/cm-nginx.yaml"
+          sh "kubectl apply -f kubernetes/ "
 
         }
       }
