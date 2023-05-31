@@ -10,7 +10,7 @@ metadata:
   name: leto-latest-ingress
 spec:
   rules:
-  - host: leto.flask-app.ht.nearteam.fr
+  - host: leto-modelizer.ht.nearteam.fr
     http:
       paths:
       - path: /
