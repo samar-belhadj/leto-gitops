@@ -103,7 +103,7 @@ podTemplate(
     }
 
     stage('Build / Push Docker Image'){
-      container('docker-container') {
+      container('docker-daemon') {
        
           withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
             dir('leto-modelizer') {
