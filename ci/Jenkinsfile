@@ -61,7 +61,9 @@ podTemplate(
         sed -i 's,leto-modelizer-plugin-core#.*",leto-modelizer-plugin-core",g' package.json
         """
       }
-      
+
+     
+     
     
     }
     stage('Build ') {
@@ -74,9 +76,10 @@ podTemplate(
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
             npm install --save ../kubernator-plugin
+            npm install --save ../jenkinator-plugin
             
 
-            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" ] }'>plugin.config.json
+            echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" , "jenkinator-plugin"] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
             npm run build
