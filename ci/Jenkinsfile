@@ -1,5 +1,5 @@
 image_full_name = 'letowithdocker'
-image_tag = '1.0.0'
+image_tag = '2.2.2'
 
 
 podTemplate(
@@ -13,7 +13,7 @@ podTemplate(
     
     stage('Checkout leto project') {
       withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-        checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "$branch"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-core.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/leto-modelizer-plugin-cli.git']]])
         checkout([$class: 'GitSCM', branches: [[name: "main"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[url: 'https://github.com/samar-belhadj/githubator-plugin.git']]])
