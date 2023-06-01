@@ -104,7 +104,7 @@ podTemplate(
        
             dir('leto-modelizer') {
               sh """
-              docker build -t ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG} -f ../leto-gitops/docker/Dockerfile .
+              docker build -t ${REPO_NAME}/leto-modelizer:${IMAGE_TAG} -f ../leto-gitops/docker/Dockerfile .
               
               """
             }
@@ -120,7 +120,7 @@ podTemplate(
                 dir('leto-modelizer') {
                   sh """
                   mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
-                  docker --config /usr/docker_config/ push  ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
+                  docker --config /usr/docker_config/ push  ${REPO_NAME}/leto-modelizer:${IMAGE_TAG}
                   """
                 }
               }
@@ -130,6 +130,9 @@ podTemplate(
 
      stage('Trigger cd'){
             build job: '../leto/cd'
+            parameters: [
+                string(name: 'IMAGE_TAG', value: "$IMAGE_TAG")
+            ]
             
         }
 
