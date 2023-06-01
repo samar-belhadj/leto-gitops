@@ -119,7 +119,7 @@ podTemplate(
                 dir('leto-modelizer') {
                   sh """
                   mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
-                  docker --config /usr/docker_config/ push  samarbelhadj/${image_full_name}:${image_tag}
+                  docker --config /usr/docker_config/ push  samarbelhadj/${image_name}:${image_tag}
                   """
                 }
               }
