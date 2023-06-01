@@ -22,7 +22,7 @@ spec:
         app.kubernetes.io/component: leto-latest
     spec:
       containers:
-        - image: 
+        - image:  samarbelhadj/leto-modelizer:1.0.0
           imagePullPolicy: Always
           name: leto-latest-cn
           ports:
