@@ -129,7 +129,7 @@ podTemplate(
     }
 
      stage('Trigger cd'){
-            build job: 'leto/cd',
+            build job: '../cd'
             parameters: [
                 string(name: 'REPO_NAME', value: "$REPO_NAME"),
                 string(name: 'IMAGE_NAME', value: "$IMAGE_NAME"),
