@@ -131,7 +131,7 @@ podTemplate(
      stage('Trigger cd'){
             build job: '../leto/cd'
             parameters: [
-                string(name: 'IMAGE_TAG', value: "$IMAGE_TAG")
+                string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}")
             ]
             
         }
