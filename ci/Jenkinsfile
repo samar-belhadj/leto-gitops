@@ -103,7 +103,7 @@ podTemplate(
        
             dir('leto-modelizer') {
               sh """
-              docker build -t samarbelhadj/${image_full_name}:${image_tag} -f ../leto-gitops/docker/Dockerfile .
+              docker build -t ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG} -f ../leto-gitops/docker/Dockerfile .
               
               """
             }
@@ -119,7 +119,7 @@ podTemplate(
                 dir('leto-modelizer') {
                   sh """
                   mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
-                  docker --config /usr/docker_config/ push  samarbelhadj/${image_name}:${image_tag}
+                  docker --config /usr/docker_config/ push  ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
                   """
                 }
               }
