@@ -22,7 +22,7 @@ spec:
         app.kubernetes.io/component: leto-latest
     spec:
       containers:
-        - image: REPO_NAME/IMAGE_NAME:IMAGE_TAG
+        - image: 
           imagePullPolicy: Always
           name: leto-latest-cn
           ports:
