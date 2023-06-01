@@ -1,0 +1,21 @@
+jobs:
+  - script: >
+      pipelineJob('leto/ci') {
+        parameters {
+          stringParam('VERSION', '1.0', 'my version')
+        }
+        definition {
+          cpsScm {
+            scriptPath('ci/Jenkinsfile')
+            scm {
+              git {
+                remote {
+                  url('https://github.com/samar-belhadj/leto-gitops.git')
+                }
+                branch('*/main')
+              }
+            }
+            lightweight(true)
+          }
+        }
+      }
