@@ -1,11 +1,11 @@
 podTemplate(
   inheritFrom: 'jenkins-agent',
-  envVars: [
+  /*envVars: [
         envVar(key: 'REPO_NAME', value: "${params.REPO_NAME}"),
         envVar(key: 'IMAGE_NAME', value: "${params.IMAGE_NAME}"),
         envVar(key: 'IMAGE_TAG', value: "${params.IMAGE_TAG}")
     ],
-
+*/
   containers: [
     containerTemplate(name: 'node-container', image: 'node:18.4.0', alwaysPullImage: false, ttyEnabled: true, command: 'cat'),
   ]
@@ -139,9 +139,9 @@ podTemplate(
             build job: '../leto/cd'
             parameters: [
               
-                string(name: 'REPO_NAME', value: "$REPO_NAME"),
-                string(name: 'IMAGE_NAME', value: "$IMAGE_NAME"),
-                string(name: 'IMAGE_TAG', value: "$IMAGE_TAG")
+                string(name: 'REPO_NAME', value: "${REPO_NAME}"),
+                string(name: 'IMAGE_NAME', value: "${IMAGE_NAME}"),
+                string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}")
             ]
             
         }
