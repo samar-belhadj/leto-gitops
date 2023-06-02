@@ -79,7 +79,6 @@ podTemplate(
           dir('leto-modelizer') {
             sh """
             rm -rf package-lock.json
-            npm install npm@latest -g
             npm install  
             npm install --save ../terrator-plugin
             npm install --save ../githubator-plugin
