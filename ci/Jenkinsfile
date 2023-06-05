@@ -100,13 +100,15 @@ podTemplate(
         
       }
     }
+    
+    
 
     stage('Build Docker Image'){
       container('docker-daemon') {
        
             dir('leto-modelizer') {
               sh """
-              docker build -t ${REPO_NAME}/leto-modelizer:${IMAGE_TAG} -f ../leto-gitops/docker/Dockerfile .
+              docker build -t ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG} -f ../leto-gitops/docker/Dockerfile .
               
               """
             }
@@ -114,15 +116,15 @@ podTemplate(
       
       
     }
-
+    
+     
     stage('Push Docker Image'){
           container('docker-daemon') {
           
-              withCredentials([file(credentialsId: 'docker-config', variable: 'DOCKER_CONFIG')]){
+              withDockerRegistry(credentialsId: 'LETOacr', url: 'https://acrleto.azurecr.io'){
                 dir('leto-modelizer') {
                   sh """
-                  mkdir /usr/docker_config && cp "$DOCKER_CONFIG" /usr/docker_config/
-                  docker --config /usr/docker_config/ push  ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
+                  docker push  ${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
                   """
                 }
               }
