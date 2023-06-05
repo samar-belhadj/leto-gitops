@@ -17,7 +17,7 @@ podTemplate(
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]){
           echo 'Applying K8s manifests...'
            sh "kubectl apply -f kubernetes/ "
-          sh " kubectl set image deployment/leto-latest-deployment leto-latest-cn=${params.REPO_NAME}/${params.IMAGE_NAME}:${params.IMAGE_TAG}"
+          // sh " kubectl set image deployment/leto-latest-deployment leto-latest-cn=${params.REPO_NAME}/${params.IMAGE_NAME}:${params.IMAGE_TAG}"
           //sh "kubectl apply -f kubernetes/  "
 
         }
