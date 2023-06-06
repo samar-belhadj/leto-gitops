@@ -23,13 +23,14 @@ spec:
     spec:
       containers:
         - image: acrleto.azurecr.io/leto-modelizer:latest
-          imagePullPolicy: Always
           name: leto-latest-cn
           ports:
             - containerPort: 80
           volumeMounts:
             - mountPath: /etc/nginx/conf.d/
               name: leto-latest-cm-nginx
+      imagePullSecrets:
+        - name: acr-credentials
       volumes:
         - configMap:
             defaultMode: 420
