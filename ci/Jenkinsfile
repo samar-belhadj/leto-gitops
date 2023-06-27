@@ -89,6 +89,9 @@ podTemplate(
             echo '{ "plugins": ["terrator-plugin" , "githubator-plugin" , "kubernator-plugin" , "docker-composator-plugin" , "jenkinator-plugin"] }'>plugin.config.json
             cat plugin.config.json
             npm run plugin:init
+
+            export MODELS_DEFAULT_FOLDER="acid"
+            export TEMPLATE_LIBRARY_BASE_URL="https://raw.githubusercontent.com/leto-socgen/leto-modelizer-templates-library/main"
             npm run build
             """
           }
