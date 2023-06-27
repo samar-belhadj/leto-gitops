@@ -11,7 +11,7 @@ data:
       listen [::]:80;
 
       location /template-library {
-        proxy_pass https://raw.githubusercontent.com/ditrit/leto-modelizer-templates-library/leto-modelizer/e2e_test;
+        proxy_pass https://raw.githubusercontent.com/leto-socgen/leto-modelizer-templates-library/main;
       }
 
       location "/cors-proxy/" {
