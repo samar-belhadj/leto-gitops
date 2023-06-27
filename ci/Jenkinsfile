@@ -7,8 +7,6 @@ podTemplate(
   node(POD_LABEL) {
     stage('Checkout leto project') {
       checkout([$class: 'GitSCM', branches: [[name: "${LETO_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer.git']]])
-      checkout([$class: 'GitSCM', branches: [[name: "${CORE_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-core']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer-plugin-core.git']]])
-      checkout([$class: 'GitSCM', branches: [[name: "${CLI_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'leto-modelizer-plugin-cli']], userRemoteConfigs: [[url: 'https://github.com/ditrit/leto-modelizer-plugin-cli.git']]])
       checkout([$class: 'GitSCM', branches: [[name: "${GITHUBATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'githubator-plugin']], userRemoteConfigs: [[url: 'https://github.com/ditrit/githubator-plugin.git']]])
       checkout([$class: 'GitSCM', branches: [[name: "${TERRATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'terrator-plugin']], userRemoteConfigs: [[url: 'https://github.com/leto-socgen/terrator-plugin.git']]])
       checkout([$class: 'GitSCM', branches: [[name: "${KUBERNATOR_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'kubernator-plugin']], userRemoteConfigs: [[url: 'https://github.com/ditrit/kubernator-plugin.git']]])
